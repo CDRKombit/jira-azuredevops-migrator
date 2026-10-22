@@ -60,6 +60,21 @@ so only use it against a test project.
 
 When switching to a different set of issues, empty `migration\workspace` first; otherwise the old export is imported too.
 
+`migrate.ps1` moves the tool logs to `migration\archive\logs` after each run. The journals stay in the workspace.
+
+### Journals during the real migration
+
+`itemsJournal.txt` and `attachmentsJournal.txt` are the importer's record of what already exists in Azure DevOps
+(Jira key → work item id). During the real migration they must be kept in `migration\workspace` across **all**
+runs and **all** projects:
+
+- Without them, a re-run imports everything again and creates duplicates.
+- Links between projects (e.g. an FKIU issue linked to a FOP issue) are only created when the other side is
+  found in the journal, so all projects must be imported into the same workspace, one after the other.
+- When moving to the next project, remove only the exported `*.json` files and `Attachments`, never the journals.
+
+Archiving the journals (as after the FKIU test run) is only for throwaway test runs.
+
 ## Recommended approach
 
 Do a trial run with a small JQL query (e.g. `project = KEY AND created >= -30d`) into a throwaway ADO project.
