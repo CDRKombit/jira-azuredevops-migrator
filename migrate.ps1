@@ -51,8 +51,22 @@ switch ($Command) {
 # -t only when there is a console to attach to; the tools may ask questions on it.
 $tty = if ([Console]::IsInputRedirected -or [Console]::IsOutputRedirected) { '-i' } else { '-it' }
 
-docker run --rm $tty @envArgs `
-    -v "$root\migration\config:/config:ro" `
-    -v "$root\migration\workspace:/workspace" `
-    $image $Command @ToolArgs
-exit $LASTEXITCODE
+try {
+    docker run --rm $tty @envArgs `
+        -v "$root\migration\config:/config:ro" `
+        -v "$root\migration\workspace:/workspace" `
+        $image $Command @ToolArgs
+    $exitCode = $LASTEXITCODE
+}
+finally {
+    # The tools always log into the workspace; move the logs out after each run.
+    # The journals (itemsJournal.txt, attachmentsJournal.txt) stay, as resuming an import depends on them.
+    $logDir = Join-Path $root 'migration\archive\logs'
+    $logs = Get-ChildItem (Join-Path $root 'migration\workspace') -Filter '*-log-*.txt' -ErrorAction SilentlyContinue
+    if ($logs) {
+        New-Item -ItemType Directory -Force $logDir | Out-Null
+        $logs | Move-Item -Destination $logDir -Force
+        Write-Host "Logs moved to $logDir"
+    }
+}
+exit $exitCode
