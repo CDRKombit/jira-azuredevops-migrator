@@ -12,6 +12,8 @@ docker build -t jira-ado-migrator .
 ## 2. Prepare
 
 1. `Copy-Item migration\.env.example migration\.env` and fill in the tokens.
+   Also copy `config.example.json` to `config.json` and `users.example.txt` to `users.txt`.
+   The real `.env`, `config.json` and `users.txt` are git-ignored and stay local.
 2. Edit `config.json`:
    - `source-project`: the Jira project key, and `query`: JQL for what to export.
    - `target-project`: an **existing** Azure DevOps project; `process-template` must match its process (Agile/Scrum/CMMI/Basic).

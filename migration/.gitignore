@@ -1,7 +1,7 @@
-# Keep only the templates; exported items, logs, attachments and secrets stay local.
+# Keep only the templates; real config, user mapping, exported items, logs, attachments and secrets stay local.
 *
 !.gitignore
 !.env.example
-!config.json
-!users.txt
+!config.example.json
+!users.example.txt
 !README.md
