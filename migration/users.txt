@@ -1,0 +1,1 @@
+jira.user@kombit.dk=ado.user@kombit.dk

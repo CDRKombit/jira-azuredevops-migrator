@@ -742,7 +742,7 @@ namespace WorkItemImport
 
             foreach (var att in filteredRelations)
             {
-                string fileName = att.FilePath.Split('\\').Last() ?? string.Empty;
+                string fileName = att.FilePath.Split('\\', '/').Last() ?? string.Empty;
                 string encodedFileName = EncodeFileNameUsingJiraStandard(fileName);
                 string restApiUrlOptionV2 = "/rest/api/2/attachment/content/" + att.AttOriginId;
                 string restApiUrlOptionV3 = "/rest/api/3/attachment/content/" + att.AttOriginId;
