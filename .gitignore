@@ -340,3 +340,4 @@ About
 *.ps1
 # Local secrets (PATs / API tokens)
 pat/
+!migrate.ps1

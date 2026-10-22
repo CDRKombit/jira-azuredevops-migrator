@@ -29,6 +29,19 @@ docker build -t jira-ado-migrator .
 
 ## 3. Run
 
+Each run starts a fresh container that is removed afterwards. Everything worth keeping lives in
+`migration\config` and `migration\workspace`, so a new container always uses the latest image and current tokens.
+
+The easiest way, from the repo root (tokens are read from `pat\jira-pat.md` and `pat\azureDevOps-pat.md`;
+the Jira login defaults to `<Windows username>@kombit.dk`, override with `$env:JIRA_USER`):
+
+```powershell
+.\migrate.ps1 export --force
+.\migrate.ps1 import
+```
+
+Or with plain Docker commands, using `migration\.env` for the credentials:
+
 ```powershell
 $mounts = @('-v', "${PWD}\migration\config:/config:ro", '-v', "${PWD}\migration\workspace:/workspace")
 
