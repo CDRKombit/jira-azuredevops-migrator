@@ -2,7 +2,7 @@
 # Dispatches to jira-export / wi-import, taking credentials from environment variables.
 set -e
 
-CONFIG="${CONFIG:-/workspace/config.json}"
+CONFIG="${CONFIG:-/config/config.json}"
 cmd="${1:-help}"
 [ $# -gt 0 ] && shift
 
@@ -24,7 +24,7 @@ case "$cmd" in
     ;;
   help|-h|--help)
     echo "Usage: migrate export [--force] | migrate import [--force] [--continue true]"
-    echo "Env:   JIRA_URL JIRA_USER JIRA_API_TOKEN ADO_URL ADO_PAT [CONFIG=/workspace/config.json]"
+    echo "Env:   JIRA_URL JIRA_USER JIRA_API_TOKEN ADO_URL ADO_PAT [CONFIG=/config/config.json]"
     ;;
   *)
     exec "$cmd" "$@"

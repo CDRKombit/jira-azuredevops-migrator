@@ -11,7 +11,7 @@
   "batch-size": 20,
   "log-level": "Info",
   "attachment-folder": "Attachments",
-  "user-mapping-file": "users.txt",
+  "user-mapping-file": "/config/users.txt",
   "base-area-path": "Migrated",
   "base-iteration-path": "Migrated",
   "ignore-failed-links": true,
